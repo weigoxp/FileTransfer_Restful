@@ -1,7 +1,7 @@
 # FileTransfer_Restful
 
 * Use H2 as metainfo storage  
-* file storage path locates in Pathconfig class
+* file storage path locates in application.properties
 
   API: 
 
