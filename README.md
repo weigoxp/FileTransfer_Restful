@@ -26,3 +26,7 @@
   **3. Download file stream by fileID**  
 
   get localhost:8080/file/{id}
+
+  **4. Get file ids which has size greater than the parameter**  
+
+  get localhost:8080/file?sizeGreater=???
