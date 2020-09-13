@@ -1,7 +1,7 @@
 package com.finra.rest.Controller;
 
-import com.finra.rest.Utility.DuplicateFileException;
-import com.finra.rest.Utility.DuplicateFileResponse;
+import com.finra.rest.Utility.UploadFileException;
+import com.finra.rest.Utility.UploadFileResponse;
 import com.finra.rest.Utility.FileNotExistException;
 import com.finra.rest.Utility.FileNotExistResponse;
 import org.slf4j.Logger;
@@ -24,8 +24,8 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler
-    public ResponseEntity<DuplicateFileResponse> handleDuplicateFileException(DuplicateFileException e) {
-        DuplicateFileResponse response = new DuplicateFileResponse();
+    public ResponseEntity<UploadFileResponse> handleDuplicateFileException(UploadFileException e) {
+        UploadFileResponse response = new UploadFileResponse();
 
         response.setStatus(HttpStatus.FORBIDDEN.value());
         response.setMessage(e.getMessage());

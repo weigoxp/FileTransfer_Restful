@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finra.rest.Entity.MetaInfo;
 import com.finra.rest.Service.DownloadService;
 import com.finra.rest.Service.UploadService;
-import com.finra.rest.Utility.DuplicateFileException;
+import com.finra.rest.Utility.UploadFileException;
 import com.finra.rest.Utility.FileNotExistException;
 import com.finra.rest.VO.MetaVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +41,9 @@ public class FileController {
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file,
                                      @RequestParam("meta")String meta) throws IOException {
 
-        boolean success = uploadService.saveFile(file);
-        if(!success)
-            throw new DuplicateFileException("file with same name aleady exists");
+        if(file.isEmpty()) throw new UploadFileException("file must not be empty");
+
+        if(!uploadService.saveFile(file)) throw new UploadFileException("file with same name aleady exists");
 
         MetaVO metaVO = objectMapper.readValue(meta, MetaVO.class);
         Integer fileID = uploadService.saveMeta(metaVO);

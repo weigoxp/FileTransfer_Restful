@@ -27,7 +27,9 @@ public class UploadServiceImpl implements UploadService {
 
     @Override
     public boolean saveFile(MultipartFile file) throws IOException {
+
         String fullPath = path +file.getOriginalFilename();
+
         boolean exists = new File(fullPath).exists();
 
         if(exists)
