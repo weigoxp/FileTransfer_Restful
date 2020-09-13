@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.File;
+import java.util.List;
 
 @Service
 public class DownloadServiceImpl implements DownloadService {
@@ -36,4 +37,12 @@ public class DownloadServiceImpl implements DownloadService {
 
         return new File(fullPath);
     }
+
+    @Override
+    @Transactional
+    public List<MetaInfo> getFilesGreaterThan(Long size){
+
+        return metaDAO.findIdBySizeGreaterThan(size);
+    }
+
 }

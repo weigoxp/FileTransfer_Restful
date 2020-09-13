@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finra.rest.Entity.MetaInfo;
 import com.finra.rest.Service.DownloadService;
 import com.finra.rest.Service.UploadService;
-import com.finra.rest.Utility.UploadFileException;
 import com.finra.rest.Utility.FileNotExistException;
+import com.finra.rest.Utility.UploadFileException;
 import com.finra.rest.VO.MetaVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -83,5 +85,15 @@ public class FileController {
         return ResponseEntity.ok()
                 .headers(header)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(resource);    }
+                .body(resource);
+    }
+
+    // get file ids which has size greater than **
+    @GetMapping("file")
+    public ResponseEntity<List<Integer>> getFileIdsGreaterThan(@RequestParam("sizeGreater") Long size) {
+
+        List<MetaInfo> list = downloadService.getFilesGreaterThan(size);
+
+        return new ResponseEntity<>(list.stream().map(i->i.getId()).collect(Collectors.toList()), HttpStatus.OK);
+    }
 }
